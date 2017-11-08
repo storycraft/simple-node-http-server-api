@@ -1,0 +1,20 @@
+{
+  "name": "simple-nodejs-server-api",
+  "version": "0.0.1",
+  "description": "Simple Server API",
+  "main": "server.js",
+  "dependencies": {
+    "wildcard": "^1.1.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node server.js",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "server-api",
+    "nodejs"
+  ],
+  "author": "storycraft",
+  "license": "MIT"
+}
