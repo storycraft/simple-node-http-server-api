@@ -1,10 +1,14 @@
 {
-  "name": "simple-http-server",
+  "name": "storycraft-http-server",
   "version": "0.0.1",
-  "description": "Simple http server",
+  "description": "storycraft's http server",
   "main": "server.js",
   "dependencies": {
     "wildcard": "^1.1.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/storycraft/simple-node-http-server-api"
   },
   "devDependencies": {},
   "scripts": {
