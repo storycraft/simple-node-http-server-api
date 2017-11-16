@@ -1,18 +1,18 @@
 {
-  "name": "simple-nodejs-server-api",
+  "name": "simple-http-server",
   "version": "0.0.1",
-  "description": "Simple Server API",
+  "description": "Simple http server",
   "main": "server.js",
   "dependencies": {
     "wildcard": "^1.1.2"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "node server.js",
+    "test": "node tests/test.js",
     "start": "node server.js"
   },
   "keywords": [
-    "server-api",
+    "server",
     "nodejs"
   ],
   "author": "storycraft",

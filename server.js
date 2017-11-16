@@ -1,10 +1,11 @@
 //기본 모듈 로드
 let http = require('http');
+let Logger = require('./logger.js');
 let url = require('url');
 let wildcard = require('wildcard');
 
-exports.createServer = function(logger,port){
-  var server = new Server(logger);
+exports.createServer = function(port){
+  var server = new Server(logger());
   if (port)
     server.run(port);
   return server;
@@ -13,26 +14,26 @@ exports.createServer = function(logger,port){
 class Server {
   constructor(logger){
     this._logger = logger;
-    this._dedicatedServer;
+    this._nodeServer;
     this._listeners = [];
     this._started = false;
   }
 
   run(port){
-    if (!port || port < 0 || port > 65536){
-      this._logger.err('허용 포트 범위는 0 ~ 65536 입니다.');
+    if (!port || port < 0 || port > 65535){
+      this._logger.err('allowed port area is 0 ~ 65535.');
       return false;
     }
     if (this._started){
-      this._logger.err('이미 서버가 시작되었습니다.');
+      this._logger.err('Server already started.');
       return false;
     }
 
     this._started = true;
 
     //http 서버 시작, 리스너 연결
-    this._dedicatedServer = http.createServer(this.onConnect.bind(this));
-    this._dedicatedServer.listen(port);
+    this._nodeServer = http.createServer(this.onConnect.bind(this));
+    this._nodeServer.listen(port);
 
     return true;
   }
@@ -43,15 +44,15 @@ class Server {
 
   stop(callback){
     if (!this._started){
-      this._logger.err('서버가 이미 꺼져 있습니다.');
+      this._logger.err('Server already stopped.');
       return;
     }
 
     this._started = false;
 
-    this._logger.log('서버 정지중...');
+    this._logger.log('stoping server...');
 
-    this._dedicatedServer.close(() => {
+    this._nodeServer.close(() => {
       this._logger.log('서버가 정지 되었습니다.');
       if (typeof(callback) == 'function')
         callback();
@@ -67,7 +68,7 @@ class Server {
 
   removeListener(listenerId){
     if (!this._listeners[listenerId]){
-      this._logger.err('리스너가 없습니다');
+      this._logger.err('Cant find listener with id ' + listenerId);
       return;
     }
 
@@ -90,7 +91,6 @@ class Server {
       if (object && wildcard(object.url,e.Info.pathname)){
         if (!founded)
           founded = true;
-        res.writeHead(200);
         object.listener(e);
       }
     }
@@ -107,8 +107,8 @@ class Server {
     return this._logger;
   }
 
-  get DedicatedServer(){
-    return this._dedicatedServer;
+  get NodeServer(){
+    return this._nodeServer;
   }
 }
 
