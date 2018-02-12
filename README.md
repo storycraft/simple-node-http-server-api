@@ -1,6 +1,6 @@
 [![NPM](https://nodei.co/npm/storycraft-http-server.png)](https://www.npmjs.com/package/storycraft-http-server)
 
-# simple-node-http-server
+# storycraft-http-server
 
 Simple http Server
 
